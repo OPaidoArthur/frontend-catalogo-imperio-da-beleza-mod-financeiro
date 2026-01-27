@@ -1,4 +1,3 @@
-import nodemailer from "nodemailer"
 
 type CheckoutPayload = {
   customer: {
@@ -67,6 +66,33 @@ async function readResponseDetail(response: Response) {
     return await response.text()
   } catch {
     return ""
+  }
+}
+
+async function sendResendEmail(params: {
+  apiKey: string
+  from: string
+  to: string | string[]
+  subject: string
+  text: string
+}) {
+  const response = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${params.apiKey}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: params.from,
+      to: params.to,
+      subject: params.subject,
+      text: params.text,
+    }),
+  })
+
+  if (!response.ok) {
+    const detail = await readResponseDetail(response)
+    throw new Error(detail || `Resend error: ${response.status}`)
   }
 }
 
@@ -140,39 +166,27 @@ export async function POST(request: Request) {
 
   const orderData = (await orderResponse.json()) as { id?: string }
 
-  const smtpHost = process.env.SMTP_HOST
-  const smtpPort = process.env.SMTP_PORT
-  const smtpUser = process.env.SMTP_USER
-  const smtpPass = process.env.SMTP_PASS
-  const smtpSecure = process.env.SMTP_SECURE === "true"
   const from =
     process.env.SMTP_FROM || process.env.COMPANY_EMAIL || "no-reply@imperio.com"
   const companyEmail =
     process.env.COMPANY_EMAIL || "imperiodabelezavariedades@gmail.com"
+  const resendApiKey = process.env.RESEND_API_KEY
 
   let emailSent = false
-  if (smtpHost && smtpPort && smtpUser && smtpPass) {
+  if (!resendApiKey) {
+    console.error("Resend API key not configured")
+  } else {
     try {
-      const transporter = nodemailer.createTransport({
-        host: smtpHost,
-        port: Number(smtpPort),
-        secure: smtpSecure,
-        auth: {
-          user: smtpUser,
-          pass: smtpPass,
-        },
-      })
-
       const text = buildText(payload, orderData.id)
-
-      await transporter.sendMail({
+      await sendResendEmail({
+        apiKey: resendApiKey,
         from,
         to: companyEmail,
         subject: "Novo pedido - Catálogo Império da Beleza",
         text,
       })
-
-      await transporter.sendMail({
+      await sendResendEmail({
+        apiKey: resendApiKey,
         from,
         to: payload.customer.email,
         subject: "Confirmação do seu pedido",
@@ -181,7 +195,7 @@ export async function POST(request: Request) {
       })
       emailSent = true
     } catch (error) {
-      console.error("Email send failed", error)
+      console.error("Resend send failed", error)
     }
   }
 

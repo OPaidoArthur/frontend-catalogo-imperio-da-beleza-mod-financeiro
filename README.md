@@ -17,14 +17,10 @@ Frontend (publicas):
 
 Email (servidor):
 
-- `SMTP_HOST`
-- `SMTP_PORT`
-- `SMTP_USER`
-- `SMTP_PASS`
-- `SMTP_SECURE` (`true` ou `false`)
 - `SMTP_FROM` (ex: `catalogo@seudominio.com`)
 - `COMPANY_EMAIL` (ex: `imperiodabelezavariedades@gmail.com`)
 - `CATALOG_API_KEY` (mesma chave configurada no backend)
+- `RESEND_API_KEY` (obrigatorio para envio de e-mail)
 
 ## Build
 
