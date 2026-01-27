@@ -16,10 +16,10 @@ function buildWhatsAppMessage(params: {
   total: number
 }) {
   const lines = [
-    "Novo pedido pelo catalogo",
+    "Novo pedido pelo catálogo",
     params.orderId ? `Pedido: ${params.orderId}` : null,
     `Cliente: ${params.name}`,
-    `Email: ${params.email}`,
+    `E-mail: ${params.email}`,
     `Telefone: ${params.phone}`,
     "",
     "Itens:",
@@ -32,7 +32,7 @@ function buildWhatsAppMessage(params: {
     `Total: ${formatCurrency(params.total)}`,
   ]
   if (params.note) {
-    lines.push("", `Observacao: ${params.note}`)
+    lines.push("", `Observação: ${params.note}`)
   }
   return lines.filter((line): line is string => line !== null).join("\n")
 }
@@ -67,11 +67,11 @@ export default function CartPage() {
   const handleCheckout = async () => {
     setStatus(null)
     if (!items.length) {
-      setStatus("Seu carrinho esta vazio.")
+      setStatus("Seu carrinho está vazio.")
       return
     }
     if (!name || !email || !phone) {
-      setStatus("Preencha nome, email e telefone.")
+      setStatus("Preencha nome, e-mail e telefone.")
       return
     }
     setLoading(true)
@@ -100,7 +100,7 @@ export default function CartPage() {
       })
       if (!response.ok) {
         const detail = await response.text()
-        setStatus(detail || "Nao foi possivel registrar o pedido.")
+        setStatus(detail || "Não foi possível registrar o pedido.")
         setLoading(false)
         return
       }
@@ -111,11 +111,11 @@ export default function CartPage() {
       orderId = data.order_id ?? null
       if (data.email_sent === false) {
         setStatus(
-          "Pedido registrado, mas nao foi possivel enviar o email."
+          "Pedido registrado, mas não foi possível enviar o e-mail."
         )
       }
     } catch {
-      setStatus("Nao foi possivel registrar o pedido.")
+      setStatus("Não foi possível registrar o pedido.")
       setLoading(false)
       return
     }
@@ -141,7 +141,7 @@ export default function CartPage() {
 
     const link = buildWhatsappLink(whatsappNumber, message)
     if (!link) {
-      setStatus("Numero de WhatsApp nao configurado.")
+      setStatus("Número de WhatsApp não configurado.")
       setLoading(false)
       return
     }
@@ -188,9 +188,9 @@ export default function CartPage() {
             </div>
             <div className="space-y-2 text-sm text-[color:var(--brand-ink)]/70">
               <p className="font-semibold text-[color:var(--brand-ink)]">
-                Observacao
+                Observação
               </p>
-              <p>{orderSummary.note || "Sem observacoes."}</p>
+              <p>{orderSummary.note || "Sem observações."}</p>
             </div>
           </div>
 
@@ -259,9 +259,9 @@ export default function CartPage() {
         </div>
       ) : !items.length ? (
         <div className="rounded-3xl border border-white/70 bg-white/80 p-10 text-center text-sm text-[color:var(--brand-ink)]/70 shadow-[0_20px_40px_rgba(20,20,35,0.08)]">
-          Seu carrinho esta vazio.{" "}
+          Seu carrinho está vazio.{" "}
           <Link href="/" className="font-semibold text-[color:var(--brand-ink)]">
-            Voltar para o catalogo
+            Voltar para o catálogo
           </Link>
         </div>
       ) : (
@@ -351,7 +351,7 @@ export default function CartPage() {
               <input
                 value={email}
                 onChange={(event) => setEmail(event.target.value)}
-                placeholder="Email"
+                placeholder="E-mail"
                 type="email"
                 className="w-full rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-rose)]"
               />
@@ -364,7 +364,7 @@ export default function CartPage() {
               <textarea
                 value={note}
                 onChange={(event) => setNote(event.target.value)}
-                placeholder="Observacao (opcional)"
+                placeholder="Observação (opcional)"
                 className="min-h-[96px] w-full rounded-2xl border border-white/70 bg-white/70 px-4 py-3 text-sm outline-none focus:ring-2 focus:ring-[color:var(--brand-rose)]"
               />
             </div>

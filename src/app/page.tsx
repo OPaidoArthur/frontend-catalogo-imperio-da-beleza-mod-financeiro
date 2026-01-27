@@ -18,21 +18,21 @@ export default async function HomePage() {
         <div className="relative grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="space-y-6 animate-fade-up">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
-              Imperio da Beleza
+              Império da Beleza
             </p>
             <h1 className="text-4xl font-semibold leading-tight md:text-5xl">
               Sua vitrine digital de beleza, pronta para comprar via WhatsApp
             </h1>
             <p className="text-base text-[color:var(--brand-ink)]/70 md:text-lg">
               Produtos selecionados com carinho. Escolha, monte seu carrinho e
-              finalize com atendimento humano e rapido.
+              finalize com atendimento humano e rápido.
             </p>
             <div className="flex flex-wrap gap-3">
               <Link
                 href="#produtos"
                 className="rounded-full bg-[color:var(--brand-ink)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_16px_30px_rgba(20,20,35,0.25)] transition hover:-translate-y-0.5"
               >
-                Ver catalogo
+                Ver catálogo
               </Link>
               <Link
                 href="/cart"
@@ -51,15 +51,15 @@ export default async function HomePage() {
               <ul className="mt-4 space-y-3 text-sm text-[color:var(--brand-ink)]/70">
                 <li className="flex items-center gap-3">
                   <span className="h-2 w-2 rounded-full bg-[color:var(--brand-rose)]" />
-                  Atendimento rapido via WhatsApp.
+                  Atendimento rápido via WhatsApp.
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="h-2 w-2 rounded-full bg-[color:var(--brand-rose)]" />
-                  Catalogo sempre atualizado.
+                  Catálogo sempre atualizado.
                 </li>
                 <li className="flex items-center gap-3">
                   <span className="h-2 w-2 rounded-full bg-[color:var(--brand-rose)]" />
-                  Confirmacao por email apos finalizar.
+                  Confirmação por e-mail após finalizar.
                 </li>
               </ul>
             </div>
@@ -69,7 +69,7 @@ export default async function HomePage() {
               </p>
               <p className="mt-3 text-sm text-[color:var(--brand-ink)]/70">
                 Selecione seus itens favoritos e compartilhe o pedido em um
-                clique. Simples, rapido e elegante.
+                clique. Simples, rápido e elegante.
               </p>
             </div>
           </div>
@@ -86,18 +86,18 @@ export default async function HomePage() {
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
             Sobre
           </p>
-          <h2 className="text-3xl font-semibold">Beleza e cuidado em um so lugar</h2>
+          <h2 className="text-3xl font-semibold">Beleza e cuidado em um só lugar</h2>
           <p className="text-sm text-[color:var(--brand-ink)]/70">
             Trabalhamos com itens selecionados para elevar sua rotina de beleza.
-            Do basico ao sofisticado, tudo com atendimento proximo e confiavel.
+            Do básico ao sofisticado, tudo com atendimento próximo e confiável.
           </p>
         </div>
         <div className="grid gap-4 md:grid-cols-2">
           {[
             "Curadoria de produtos nacionais e importados.",
-            "Atendimento individualizado e rapido.",
+            "Atendimento individualizado e rápido.",
             "Pedidos finalizados via WhatsApp.",
-            "Confirmacao por email para cliente e equipe.",
+            "Confirmação por e-mail para cliente e equipe.",
           ].map((text) => (
             <div
               key={text}
@@ -116,7 +116,7 @@ export default async function HomePage() {
               Precisa de ajuda para escolher?
             </h2>
             <p className="text-sm text-white/80">
-              Fale com a equipe e receba recomendacoes personalizadas para o seu
+              Fale com a equipe e receba recomendações personalizadas para o seu
               estilo.
             </p>
           </div>

@@ -43,13 +43,13 @@ export function CatalogClient({ items }: CatalogClientProps) {
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
-            Catalogo
+            Catálogo
           </p>
           <h2 className="text-3xl font-semibold md:text-4xl">
             Produtos em destaque
           </h2>
           <p className="mt-2 text-sm text-[color:var(--brand-ink)]/70">
-            Selecao atualizada com itens de beleza e cosmeticos.
+            Seleção atualizada com itens de beleza e cosméticos.
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -103,14 +103,14 @@ export function CatalogClient({ items }: CatalogClientProps) {
                   </div>
                 )}
                 <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/70">
-                  {item.brand ?? "Imperio"}
+                  {item.brand ?? "Império"}
                 </span>
               </div>
               <div className="flex flex-1 flex-col gap-4 px-5 pb-6 pt-5">
                 <div className="space-y-2">
                   <h3 className="text-xl font-semibold">{item.name}</h3>
                   <p className="text-sm text-[color:var(--brand-ink)]/70">
-                    {item.description ?? "Detalhes disponiveis no WhatsApp."}
+                    {item.description ?? "Detalhes disponíveis no WhatsApp."}
                   </p>
                 </div>
                 <div className="mt-auto flex items-center justify-between">

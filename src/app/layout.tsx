@@ -18,8 +18,8 @@ const manrope = Manrope({
 })
 
 export const metadata: Metadata = {
-  title: "Imperio da Beleza | Catalogo",
-  description: "Catalogo de produtos Imperio da Beleza.",
+  title: "Império da Beleza | Catálogo",
+  description: "Catálogo de produtos Império da Beleza.",
 }
 
 export default function RootLayout({

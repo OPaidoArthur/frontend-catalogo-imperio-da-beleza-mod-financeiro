@@ -20,10 +20,10 @@ type CheckoutPayload = {
 
 function buildText(payload: CheckoutPayload, orderId?: string) {
   const lines = [
-    "Novo pedido pelo catalogo",
+    "Novo pedido pelo catálogo",
     orderId ? `Pedido: ${orderId}` : null,
     `Cliente: ${payload.customer.name}`,
-    `Email: ${payload.customer.email}`,
+    `E-mail: ${payload.customer.email}`,
     `Telefone: ${payload.customer.phone}`,
     "",
     "Itens:",
@@ -43,7 +43,7 @@ function buildText(payload: CheckoutPayload, orderId?: string) {
     }`,
   ]
   if (payload.note) {
-    lines.push("", `Observacao: ${payload.note}`)
+    lines.push("", `Observação: ${payload.note}`)
   }
   return lines.filter((line): line is string => line !== null).join("\n")
 }
@@ -168,14 +168,14 @@ export async function POST(request: Request) {
       await transporter.sendMail({
         from,
         to: companyEmail,
-        subject: "Novo pedido - Catalogo Imperio da Beleza",
+        subject: "Novo pedido - Catálogo Império da Beleza",
         text,
       })
 
       await transporter.sendMail({
         from,
         to: payload.customer.email,
-        subject: "Confirmacao do seu pedido",
+        subject: "Confirmação do seu pedido",
         text:
           "Recebemos seu pedido. Em breve entraremos em contato.\n\n" + text,
       })

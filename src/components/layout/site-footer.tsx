@@ -12,14 +12,14 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-6xl gap-8 md:grid-cols-[1.2fr_0.8fr_0.8fr]">
         <div className="space-y-3">
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
-            Imperio da Beleza
+            Império da Beleza
           </p>
           <p className="text-lg font-semibold text-[color:var(--brand-ink)]">
-            Seu catalogo de beleza favorito
+            Seu catálogo de beleza favorito
           </p>
           <p>
             Atendimento personalizado via WhatsApp e acompanhamento do seu
-            pedido do inicio ao fim.
+            pedido do início ao fim.
           </p>
         </div>
 
@@ -27,13 +27,13 @@ export function SiteFooter() {
           <p className="text-sm font-semibold text-[color:var(--brand-ink)]">
             Contato
           </p>
-          <p>Email: {companyEmail}</p>
-          <p>Atendimento: seg a sab, 9h as 18h</p>
+          <p>E-mail: {companyEmail}</p>
+          <p>Atendimento: seg a sáb, 9h às 18h</p>
         </div>
 
         <div className="space-y-2">
           <p className="text-sm font-semibold text-[color:var(--brand-ink)]">
-            Navegacao
+            Navegação
           </p>
           <div className="flex flex-col gap-2">
             <Link href="#produtos" className="hover:text-[color:var(--brand-ink)]">

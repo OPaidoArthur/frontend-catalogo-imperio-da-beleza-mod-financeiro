@@ -17,7 +17,7 @@ export function SiteHeader() {
   const whatsappNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? ""
   const whatsappLink = buildWhatsappLink(
     whatsappNumber,
-    "Ola! Gostaria de ajuda com o catalogo."
+    "Olá! Gostaria de ajuda com o catálogo."
   )
 
   return (
@@ -27,16 +27,16 @@ export function SiteHeader() {
           <div className="flex size-12 items-center justify-center rounded-2xl bg-white shadow-[0_10px_30px_rgba(10,10,20,0.12)] ring-1 ring-white/70">
             <img
               src="/imperio_beleza_fundo_transparente.png"
-              alt="Imperio da Beleza"
+              alt="Império da Beleza"
               className="size-10 object-contain"
             />
           </div>
           <div>
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/70">
-              Catalogo
+              Catálogo
             </p>
             <p className="text-lg font-semibold leading-tight">
-              Imperio da Beleza
+              Império da Beleza
             </p>
           </div>
         </Link>
