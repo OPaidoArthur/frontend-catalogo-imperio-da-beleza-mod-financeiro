@@ -69,7 +69,7 @@ export default async function HomePage() {
               </p>
               <p className="mt-3 text-sm text-[color:var(--brand-ink)]/70">
                 Selecione seus itens favoritos e compartilhe o pedido em um
-                clique. Simples, rápido e elegante.
+                clique. Simples, rápido e prático.
               </p>
             </div>
           </div>
