@@ -42,15 +42,15 @@ export function SiteHeader() {
         </Link>
 
         <nav className="hidden items-center gap-6 text-sm font-medium text-[color:var(--brand-ink)]/80 md:flex">
-          <a href="#produtos" className="transition hover:text-[color:var(--brand-ink)]">
+          <Link href="/#produtos" className="transition hover:text-[color:var(--brand-ink)]">
             Produtos
-          </a>
-          <a href="#sobre" className="transition hover:text-[color:var(--brand-ink)]">
+          </Link>
+          <Link href="/#sobre" className="transition hover:text-[color:var(--brand-ink)]">
             Sobre
-          </a>
-          <a href="#contato" className="transition hover:text-[color:var(--brand-ink)]">
+          </Link>
+          <Link href="/#contato" className="transition hover:text-[color:var(--brand-ink)]">
             Contato
-          </a>
+          </Link>
         </nav>
 
         <div className="flex items-center gap-3">
