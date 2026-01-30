@@ -14,6 +14,9 @@ export function CatalogClient({ items }: CatalogClientProps) {
   const { addItem } = useCart()
   const [query, setQuery] = React.useState("")
   const [category, setCategory] = React.useState("todos")
+  const [expanded, setExpanded] = React.useState<Record<string, boolean>>({})
+  const shouldShowToggle = (description?: string | null) =>
+    Boolean(description && description.trim().length > 140)
 
   const categories = React.useMemo(() => {
     const mapped = items
@@ -109,9 +112,29 @@ export function CatalogClient({ items }: CatalogClientProps) {
               <div className="flex flex-1 flex-col gap-4 px-5 pb-6 pt-5">
                 <div className="space-y-2">
                   <h3 className="text-xl font-semibold">{item.name}</h3>
-                  <p className="text-sm text-[color:var(--brand-ink)]/70">
-                    {item.description ?? "Detalhes disponíveis no WhatsApp."}
-                  </p>
+                  <div className="space-y-2">
+                    <p
+                      className={`text-sm text-[color:var(--brand-ink)]/70 ${
+                        expanded[item.id] ? "" : "line-clamp-3"
+                      }`}
+                    >
+                      {item.description ?? "Detalhes disponíveis no WhatsApp."}
+                    </p>
+                    {shouldShowToggle(item.description) ? (
+                      <button
+                        type="button"
+                        onClick={() =>
+                          setExpanded((prev) => ({
+                            ...prev,
+                            [item.id]: !prev[item.id],
+                          }))
+                        }
+                        className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/60 transition hover:text-[color:var(--brand-ink)]"
+                      >
+                        {expanded[item.id] ? "Ver menos" : "Ver mais"}
+                      </button>
+                    ) : null}
+                  </div>
                 </div>
                 <div className="mt-auto flex items-center justify-between">
                   <div className="text-lg font-semibold text-[color:var(--brand-ink)]">
