@@ -4,7 +4,7 @@ export function SiteFooter() {
   const companyEmail =
     process.env.NEXT_PUBLIC_COMPANY_EMAIL ?? "imperiodabelezavariedades@gmail.com"
   const whatsappEmail =
-    process.env.NEXT_PUBLIC_WHATSAPP_EMAIL ?? "92 984501267"
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "92 984501267"
 
   return (
     <footer
