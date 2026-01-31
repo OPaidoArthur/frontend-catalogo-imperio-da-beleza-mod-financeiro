@@ -13,16 +13,6 @@ export default async function HomePage() {
       <section className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 px-6 py-12 shadow-[0_30px_80px_rgba(20,20,35,0.18)] md:px-12 md:py-16">
         <div className="absolute -left-16 top-10 h-48 w-48 rounded-full bg-[color:var(--brand-rose-soft)] blur-3xl" />
         <div className="absolute right-10 top-16 h-32 w-32 rounded-full bg-[color:var(--brand-mint)]/50 blur-2xl" />
-        <div className="absolute left-1/2 top-1/2 z-0 h-96 w-96 -translate-x-1/2 -translate-y-1/2 rounded-[72px] border border-white/60 bg-white/60 shadow-[0_20px_50px_rgba(20,20,35,0.12)] animate-float-slow">
-          <div className="flex h-full w-full items-center justify-center">
-            <img
-              src="/imperio_beleza_fundo_transparente.png"
-              alt="Império da Beleza"
-              className="h-64 w-64 object-contain opacity-90"
-            />
-          </div>
-        </div>
-
         <div className="relative z-10 grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="space-y-6 animate-fade-up">
             <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
@@ -83,6 +73,18 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
+      <div className="relative flex items-center justify-center">
+        <div className="h-96 w-96 rounded-[72px] border border-white/60 bg-white/60 shadow-[0_20px_50px_rgba(20,20,35,0.12)] animate-float-slow">
+          <div className="flex h-full w-full items-center justify-center">
+            <img
+              src="/imperio_beleza_fundo_transparente.png"
+              alt="Império da Beleza"
+              className="h-64 w-64 object-contain opacity-90"
+            />
+          </div>
+        </div>
+      </div>
 
       <CatalogClient items={items} />
 

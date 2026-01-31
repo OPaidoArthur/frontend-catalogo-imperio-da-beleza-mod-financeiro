@@ -17,6 +17,7 @@ export function CatalogClient({ items }: CatalogClientProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({})
   const [selectedItem, setSelectedItem] = React.useState<CatalogItem | null>(null)
   const [modalExpanded, setModalExpanded] = React.useState(false)
+  const [imageExpanded, setImageExpanded] = React.useState(false)
   const [favorites, setFavorites] = React.useState<Record<string, boolean>>({})
   const shouldShowToggle = (description?: string | null) =>
     Boolean(description && description.trim().length > 140)
@@ -252,6 +253,7 @@ export function CatalogClient({ items }: CatalogClientProps) {
                 }
                 setSelectedItem(item)
                 setModalExpanded(false)
+                setImageExpanded(false)
               }}
             >
               <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--brand-cream)]">
@@ -354,12 +356,13 @@ export function CatalogClient({ items }: CatalogClientProps) {
             className="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-white/70 bg-white/95 shadow-[0_30px_80px_rgba(20,20,35,0.2)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative aspect-[16/9] shrink-0 overflow-hidden bg-[color:var(--brand-cream)]">
+            <div className="relative h-48 shrink-0 overflow-hidden bg-[color:var(--brand-cream)] sm:h-56 md:h-64">
               {selectedItem.image ? (
                 <img
                   src={selectedItem.image}
                   alt={selectedItem.name}
-                  className="mx-auto h-full w-full max-w-[520px] object-contain"
+                  className="mx-auto h-full w-full max-w-[520px] cursor-zoom-in object-contain"
+                  onClick={() => setImageExpanded(true)}
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-sm text-[color:var(--brand-ink)]/50">
@@ -448,6 +451,32 @@ export function CatalogClient({ items }: CatalogClientProps) {
                 </button>
               </div>
             </div>
+          </div>
+        </div>
+      ) : null}
+
+      {selectedItem?.image && imageExpanded ? (
+        <div
+          className="fixed inset-0 z-[60] flex items-center justify-center bg-black/70 px-4 py-6"
+          onClick={() => setImageExpanded(false)}
+        >
+          <div
+            className="relative w-full max-w-5xl"
+            onClick={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              onClick={() => setImageExpanded(false)}
+              className="absolute right-3 top-3 z-10 inline-flex size-8 items-center justify-center rounded-full bg-white/90 text-sm font-semibold text-[color:var(--brand-ink)] shadow-[0_10px_20px_rgba(20,20,35,0.12)]"
+              aria-label="Fechar"
+            >
+              ×
+            </button>
+            <img
+              src={selectedItem.image}
+              alt={selectedItem.name}
+              className="max-h-[90vh] w-full object-contain"
+            />
           </div>
         </div>
       ) : null}
