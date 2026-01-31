@@ -3,8 +3,22 @@ import Link from "next/link"
 export function SiteFooter() {
   const companyEmail =
     process.env.NEXT_PUBLIC_COMPANY_EMAIL ?? "imperiodabelezavariedades@gmail.com"
-  const whatsappEmail =
+  const whatsappRaw =
     process.env.NEXT_PUBLIC_WHATSAPP_NUMBER ?? "92 984501267"
+
+  const formatWhatsapp = (value: string) => {
+    const digits = value.replace(/\D/g, "")
+    const normalized = digits.startsWith("55") && digits.length >= 12
+      ? digits.slice(2)
+      : digits
+    if (normalized.length < 10) {
+      return value
+    }
+    const ddd = normalized.slice(-11, -9)
+    const number = normalized.slice(-9)
+    return `(${ddd}) ${number.slice(0, 5)}-${number.slice(5)}`
+  }
+  const whatsappFormatted = formatWhatsapp(whatsappRaw)
 
   return (
     <footer
@@ -30,7 +44,7 @@ export function SiteFooter() {
             Contato
           </p>
           <p>E-mail: {companyEmail}</p>
-          <p>WhatsApp: {whatsappEmail}</p>
+          <p>WhatsApp: {whatsappFormatted}</p>
           <p>Atendimento: seg a sáb, 9h às 18h</p>
         </div>
 
