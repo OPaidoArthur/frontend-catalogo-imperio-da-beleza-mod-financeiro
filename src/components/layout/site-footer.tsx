@@ -65,6 +65,9 @@ export function SiteFooter() {
           </div>
         </div>
       </div>
+      <div className="mx-auto mt-10 max-w-6xl border-t border-white/70 pt-6 text-center text-xs text-[color:var(--brand-ink)]/60">
+        © {new Date().getFullYear()} EEF Inteligência Digital
+      </div>
     </footer>
   )
 }
