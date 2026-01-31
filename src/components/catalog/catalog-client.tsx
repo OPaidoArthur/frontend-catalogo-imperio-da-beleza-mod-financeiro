@@ -17,8 +17,10 @@ export function CatalogClient({ items }: CatalogClientProps) {
   const [expanded, setExpanded] = React.useState<Record<string, boolean>>({})
   const [selectedItem, setSelectedItem] = React.useState<CatalogItem | null>(null)
   const [modalExpanded, setModalExpanded] = React.useState(false)
+  const [favorites, setFavorites] = React.useState<Record<string, boolean>>({})
   const shouldShowToggle = (description?: string | null) =>
     Boolean(description && description.trim().length > 140)
+  const favoritesKey = "imperio.catalogo.favorites"
 
   const categories = React.useMemo(() => {
     const mapped = items
@@ -42,6 +44,39 @@ export function CatalogClient({ items }: CatalogClientProps) {
       return matchesQuery && matchesCategory
     })
   }, [items, query, category])
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+    try {
+      const raw = window.localStorage.getItem(favoritesKey)
+      if (!raw) return
+      const parsed = JSON.parse(raw) as Record<string, boolean>
+      if (parsed && typeof parsed === "object") {
+        setFavorites(parsed)
+      }
+    } catch {
+      // ignore invalid storage
+    }
+  }, [])
+
+  React.useEffect(() => {
+    if (typeof window === "undefined") return
+    window.localStorage.setItem(favoritesKey, JSON.stringify(favorites))
+  }, [favorites])
+
+  const featured = React.useMemo(() => {
+    const ids = new Set(
+      Object.entries(favorites)
+        .filter(([, value]) => value)
+        .map(([id]) => id)
+    )
+    if (ids.size === 0) return []
+    return items.filter((item) => ids.has(item.id))
+  }, [favorites, items])
+
+  const toggleFavorite = (id: string) => {
+    setFavorites((prev) => ({ ...prev, [id]: !prev[id] }))
+  }
 
   return (
     <section id="produtos" className="space-y-8">
@@ -83,6 +118,117 @@ export function CatalogClient({ items }: CatalogClientProps) {
         ))}
       </div>
 
+      {featured.length > 0 ? (
+        <div className="space-y-4">
+          <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
+            Seus favoritos
+          </p>
+          <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+            {featured.map((item, index) => (
+              <article
+                key={item.id}
+                className="group flex h-full cursor-pointer flex-col overflow-hidden rounded-3xl border border-white/70 bg-white/80 shadow-[0_20px_40px_rgba(20,20,35,0.1)] transition hover:-translate-y-1"
+                style={{ animationDelay: `${index * 70}ms` }}
+                onClick={(event) => {
+                  const path = (event.nativeEvent as Event).composedPath?.() ?? []
+                  const shouldIgnore = path.some(
+                    (node) =>
+                      node instanceof HTMLElement &&
+                      node.dataset.noModal === "true"
+                  )
+                  if (shouldIgnore) {
+                    return
+                  }
+                  setSelectedItem(item)
+                  setModalExpanded(false)
+                }}
+              >
+                <div className="relative aspect-[4/3] overflow-hidden bg-[color:var(--brand-cream)]">
+                  {item.image ? (
+                    <img
+                      src={item.image}
+                      alt={item.name}
+                      className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                    />
+                  ) : (
+                    <div className="flex h-full w-full items-center justify-center text-sm text-[color:var(--brand-ink)]/50">
+                      Sem imagem
+                    </div>
+                  )}
+                  <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/70">
+                    {item.brand ?? "Império"}
+                  </span>
+                  <button
+                    type="button"
+                    data-no-modal="true"
+                    onClick={() => toggleFavorite(item.id)}
+                    className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-full bg-white/90 text-[color:var(--brand-ink)] shadow-[0_10px_20px_rgba(20,20,35,0.12)] transition hover:-translate-y-0.5"
+                    aria-pressed={Boolean(favorites[item.id])}
+                    aria-label="Remover dos favoritos"
+                  >
+                    <span className="text-base">★</span>
+                  </button>
+                </div>
+                <div className="flex flex-1 flex-col gap-4 px-5 pb-6 pt-5">
+                  <div className="space-y-2" data-no-modal="true">
+                    <h3 className="text-xl font-semibold">{item.name}</h3>
+                    <div className="space-y-2">
+                      <p
+                        className={`text-sm text-[color:var(--brand-ink)]/70 ${
+                          expanded[item.id] ? "" : "line-clamp-3"
+                        }`}
+                        data-no-modal="true"
+                      >
+                        {item.description ?? "Detalhes disponíveis no WhatsApp."}
+                      </p>
+                      {shouldShowToggle(item.description) ? (
+                        <button
+                          type="button"
+                          onClick={() =>
+                            setExpanded((prev) => ({
+                              ...prev,
+                              [item.id]: !prev[item.id],
+                            }))
+                          }
+                          data-no-modal="true"
+                          className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/60 transition hover:text-[color:var(--brand-ink)]"
+                        >
+                          {expanded[item.id] ? "Ver menos" : "Ver mais"}
+                        </button>
+                      ) : null}
+                    </div>
+                  </div>
+                  <div className="mt-auto flex items-center justify-between">
+                    <div className="text-lg font-semibold text-[color:var(--brand-ink)]">
+                      {item.price === null
+                        ? "Sob consulta"
+                        : formatCurrency(item.price)}
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() =>
+                        addItem({
+                          id: item.id,
+                          name: item.name,
+                          price: item.price,
+                          image: item.image,
+                          sku: item.sku ?? null,
+                          variantId: item.variantId ?? null,
+                        })
+                      }
+                      data-no-modal="true"
+                      className="rounded-full bg-[color:var(--brand-ink)] px-4 py-2 text-xs font-semibold uppercase tracking-[0.25em] text-white transition hover:-translate-y-0.5"
+                    >
+                      Adicionar
+                    </button>
+                  </div>
+                </div>
+              </article>
+            ))}
+          </div>
+        </div>
+      ) : null}
+
       {filtered.length === 0 ? (
         <div className="rounded-3xl border border-white/70 bg-white/80 p-10 text-center text-sm text-[color:var(--brand-ink)]/70 shadow-[0_20px_40px_rgba(20,20,35,0.08)]">
           Nenhum produto encontrado. Tente outra busca.
@@ -123,6 +269,22 @@ export function CatalogClient({ items }: CatalogClientProps) {
                 <span className="absolute left-4 top-4 rounded-full bg-white/80 px-3 py-1 text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/70">
                   {item.brand ?? "Império"}
                 </span>
+                <button
+                  type="button"
+                  data-no-modal="true"
+                  onClick={() => toggleFavorite(item.id)}
+                  className="absolute right-4 top-4 inline-flex size-9 items-center justify-center rounded-full bg-white/90 text-[color:var(--brand-ink)] shadow-[0_10px_20px_rgba(20,20,35,0.12)] transition hover:-translate-y-0.5"
+                  aria-pressed={Boolean(favorites[item.id])}
+                  aria-label={
+                    favorites[item.id]
+                      ? "Remover dos favoritos"
+                      : "Adicionar aos favoritos"
+                  }
+                >
+                  <span className="text-base">
+                    {favorites[item.id] ? "★" : "☆"}
+                  </span>
+                </button>
               </div>
               <div className="flex flex-1 flex-col gap-4 px-5 pb-6 pt-5">
                 <div className="space-y-2" data-no-modal="true">
