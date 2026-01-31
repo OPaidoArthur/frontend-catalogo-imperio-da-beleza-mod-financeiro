@@ -347,19 +347,19 @@ export function CatalogClient({ items }: CatalogClientProps) {
 
       {selectedItem ? (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/40 px-4 py-8 backdrop-blur-sm"
+          className="fixed inset-0 z-50 grid place-items-center bg-black/40 px-4 py-6 backdrop-blur-sm"
           onClick={() => setSelectedItem(null)}
         >
           <div
-            className="w-full max-w-2xl overflow-hidden rounded-3xl border border-white/70 bg-white/95 shadow-[0_30px_80px_rgba(20,20,35,0.2)]"
+            className="flex max-h-[92vh] w-full max-w-3xl flex-col overflow-hidden rounded-3xl border border-white/70 bg-white/95 shadow-[0_30px_80px_rgba(20,20,35,0.2)]"
             onClick={(event) => event.stopPropagation()}
           >
-            <div className="relative aspect-[16/9] overflow-hidden bg-[color:var(--brand-cream)]">
+            <div className="relative aspect-[16/9] shrink-0 overflow-hidden bg-[color:var(--brand-cream)]">
               {selectedItem.image ? (
                 <img
                   src={selectedItem.image}
                   alt={selectedItem.name}
-                  className="h-full w-full object-cover"
+                  className="mx-auto h-full w-full max-w-[520px] object-contain"
                 />
               ) : (
                 <div className="flex h-full w-full items-center justify-center text-sm text-[color:var(--brand-ink)]/50">
@@ -375,7 +375,7 @@ export function CatalogClient({ items }: CatalogClientProps) {
               </button>
             </div>
 
-            <div className="max-h-[70vh] space-y-4 overflow-y-auto px-6 py-6">
+            <div className="min-h-0 flex-1 space-y-4 overflow-y-auto px-6 py-6">
               <div className="flex flex-wrap items-center justify-between gap-3">
                 <div>
                   <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
@@ -397,16 +397,12 @@ export function CatalogClient({ items }: CatalogClientProps) {
                   <p className="text-xs font-semibold uppercase tracking-[0.2em] text-[color:var(--brand-ink)]/60">
                     Detalhes
                   </p>
-                  <p
-                    className={
-                      modalExpanded ? "" : "line-clamp-4"
-                    }
-                  >
+                  <p className={modalExpanded ? "" : "line-clamp-4"}>
                     {selectedItem.description ??
                       "Descrição não informada. Consulte no WhatsApp."}
                   </p>
                   {selectedItem.description ? (
-                    <div className="sticky bottom-0 mt-3 flex justify-start bg-white/90 py-2">
+                    <div className="sticky bottom-0 mt-3 flex justify-start bg-white/95 py-2">
                       <button
                         type="button"
                         onClick={() => setModalExpanded((prev) => !prev)}
@@ -426,7 +422,7 @@ export function CatalogClient({ items }: CatalogClientProps) {
                 </div>
               </div>
 
-              <div className="flex flex-wrap items-center gap-3">
+              <div className="sticky bottom-0 z-10 flex flex-wrap items-center gap-3 bg-white/95 py-3">
                 <button
                   type="button"
                   onClick={() =>
