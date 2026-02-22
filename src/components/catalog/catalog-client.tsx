@@ -8,9 +8,20 @@ import { formatCurrency } from "@/lib/format"
 
 type CatalogClientProps = {
   items: CatalogItem[]
+  sectionId?: string
+  sectionLabel?: string
+  title?: string
+  description?: string
+  emptyMessage?: string
 }
-
-export function CatalogClient({ items }: CatalogClientProps) {
+export function CatalogClient({
+  items,
+  sectionId = "produtos",
+  sectionLabel = "Catálogo",
+  title = "Produtos em destaque",
+  description = "Seleção atualizada com itens de beleza e cosméticos.",
+  emptyMessage = "Nenhum produto encontrado. Tente outra busca.",
+}: CatalogClientProps) {
   const { addItem } = useCart()
   const [query, setQuery] = React.useState("")
   const [category, setCategory] = React.useState("todos")
@@ -80,17 +91,15 @@ export function CatalogClient({ items }: CatalogClientProps) {
   }
 
   return (
-    <section id="produtos" className="space-y-8">
+    <section id={sectionId} className="space-y-8">
       <div className="flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
         <div>
           <p className="text-xs font-semibold uppercase tracking-[0.35em] text-[color:var(--brand-ink)]/60">
-            Catálogo
+            {sectionLabel}
           </p>
-          <h2 className="text-3xl font-semibold md:text-4xl">
-            Produtos em destaque
-          </h2>
+          <h2 className="text-3xl font-semibold md:text-4xl">{title}</h2>
           <p className="mt-2 text-sm text-[color:var(--brand-ink)]/70">
-            Seleção atualizada com itens de beleza e cosméticos.
+            {description}
           </p>
         </div>
         <div className="flex items-center gap-3">
@@ -232,7 +241,7 @@ export function CatalogClient({ items }: CatalogClientProps) {
 
       {filtered.length === 0 ? (
         <div className="rounded-3xl border border-white/70 bg-white/80 p-10 text-center text-sm text-[color:var(--brand-ink)]/70 shadow-[0_20px_40px_rgba(20,20,35,0.08)]">
-          Nenhum produto encontrado. Tente outra busca.
+          {emptyMessage}
         </div>
       ) : (
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">

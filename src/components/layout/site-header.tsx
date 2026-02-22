@@ -45,6 +45,9 @@ export function SiteHeader() {
           <Link href="/#produtos" className="transition hover:text-[color:var(--brand-ink)]">
             Produtos
           </Link>
+          <Link href="/secao-de-10" className="transition hover:text-[color:var(--brand-ink)]">
+            Seção de 10
+          </Link>
           <Link href="/#sobre" className="transition hover:text-[color:var(--brand-ink)]">
             Sobre
           </Link>

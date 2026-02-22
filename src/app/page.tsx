@@ -1,15 +1,20 @@
 import Link from "next/link"
 
 import { CatalogClient } from "@/components/catalog/catalog-client"
+import { SecaoDe10Announcement } from "@/components/catalog/secao-de-10-announcement"
 import { getCatalogItems } from "@/lib/api"
 
 export const dynamic = "force-dynamic"
 
 export default async function HomePage() {
   const items = await getCatalogItems()
+  const secaoDe10PreviewItem =
+    items.find((item) => item.price !== null && item.price <= 10) ?? null
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-16">
+      <SecaoDe10Announcement item={secaoDe10PreviewItem} />
+
       <section className="relative overflow-hidden rounded-[32px] border border-white/70 bg-white/70 px-6 py-12 shadow-[0_30px_80px_rgba(20,20,35,0.18)] md:px-12 md:py-16">
         <div className="absolute -left-16 top-10 h-48 w-48 rounded-full bg-[color:var(--brand-rose-soft)] blur-3xl" />
         <div className="absolute right-10 top-16 h-32 w-32 rounded-full bg-[color:var(--brand-mint)]/50 blur-2xl" />
@@ -31,6 +36,12 @@ export default async function HomePage() {
                 className="rounded-full bg-[color:var(--brand-ink)] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_16px_30px_rgba(20,20,35,0.25)] transition hover:-translate-y-0.5"
               >
                 Ver catálogo
+              </Link>
+              <Link
+                href="/secao-de-10"
+                className="rounded-full border border-[color:var(--brand-rose)]/60 bg-[color:var(--brand-rose)]/90 px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-white shadow-[0_14px_26px_rgba(240,90,160,0.3)] transition hover:-translate-y-0.5"
+              >
+                Seção de 10
               </Link>
               <Link
                 href="/cart"

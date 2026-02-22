@@ -56,6 +56,9 @@ export function SiteFooter() {
             <Link href="/#produtos" className="hover:text-[color:var(--brand-ink)]">
               Produtos
             </Link>
+            <Link href="/secao-de-10" className="hover:text-[color:var(--brand-ink)]">
+              Seção de 10
+            </Link>
             <Link href="/cart" className="hover:text-[color:var(--brand-ink)]">
               Carrinho
             </Link>
